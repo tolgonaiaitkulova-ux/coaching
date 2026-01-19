@@ -15,6 +15,22 @@
             padding-bottom: 0;
             background: #000;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            overflow-x: hidden;
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Предотвращаем "выпирание" контента в flex/grid из-за min-width:auto */
+        .card,
+        .card * {
+            min-width: 0;
         }
         
         /* HERO - аналогично футеру */
@@ -536,24 +552,442 @@
         
         /* Старые стили для темного фона удалены, так как блок теперь светлый */
         
+        /* Планшеты */
         @media (max-width: 968px) {
             .section {
                 height: auto;
                 margin-top: 40px;
+                padding: 0 20px;
             }
             
             .card {
                 position: relative;
                 grid-template-columns: 1fr;
                 min-height: auto;
+                padding: 30px 30px 40px;
             }
             
             .grid-2 {
                 grid-template-columns: 1fr;
+                gap: 40px;
             }
             
             .stats-row {
                 flex-direction: column;
+            }
+            
+            h2 {
+                font-size: clamp(2rem, 5vw, 3rem);
+            }
+            
+            h3 {
+                font-size: 1.4rem;
+            }
+            
+            h4 {
+                font-size: 1.2rem;
+            }
+            
+            p {
+                font-size: 1.1rem;
+            }
+            
+            ul li {
+                font-size: 1.1rem;
+            }
+            
+            .hero > div {
+                padding: 30px 20px 50px;
+            }
+            
+            .hero-cta-button,
+            .hero > div > div > div:last-child {
+                min-width: auto;
+                width: 100%;
+                max-width: 100%;
+            }
+        }
+        
+        /* Мобильные устройства */
+        @media (max-width: 768px) {
+            body {
+                font-size: 16px;
+            }
+            
+            .section {
+                padding: 0 16px;
+                margin-top: 20px;
+                min-height: auto;
+            }
+            
+            .card {
+                padding: 24px 20px 32px;
+                border-radius: 16px;
+                gap: 24px;
+            }
+            
+            .hero {
+                min-height: 60vh;
+            }
+            
+            .hero > div {
+                padding: 24px 16px 40px;
+                min-height: 60vh;
+            }
+            
+            h2 {
+                font-size: clamp(1.75rem, 8vw, 2.5rem);
+                margin-bottom: 16px;
+            }
+            
+            h3 {
+                font-size: 1.25rem;
+                margin-bottom: 12px;
+            }
+            
+            h4 {
+                font-size: 1.1rem;
+                margin-bottom: 10px;
+            }
+            
+            p {
+                font-size: 1rem;
+                line-height: 1.6;
+                margin-bottom: 12px;
+            }
+            
+            ul li {
+                font-size: 1rem;
+                padding-left: 20px;
+                margin-bottom: 10px;
+            }
+            
+            /* Hero секция */
+            .hero h2 {
+                font-size: clamp(1.75rem, 8vw, 2.5rem);
+            }
+            
+            .hero p {
+                font-size: clamp(1rem, 4vw, 1.3rem);
+                margin-bottom: 32px;
+            }
+            
+            .hero-cta-button {
+                min-width: auto !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                padding: 16px 18px !important;
+                font-size: 1.2rem !important;
+            }
+            
+            .hero > div > div > div:last-child {
+                flex-direction: column;
+                gap: 16px;
+            }
+            
+            .hero > div > div > div:last-child > div {
+                min-width: auto !important;
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+            
+            /* Навигация */
+            .main-navigation {
+                padding: 0 16px;
+            }
+            
+            .main-navigation .nav-container {
+                padding: 10px 0;
+                gap: 8px;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            .main-navigation .nav-container a {
+                font-size: 0.7rem;
+                padding: 6px 10px;
+                white-space: nowrap;
+            }
+            
+            /* Блок "Как работает коучинг" */
+            #how-coaching-works .how-coaching-grid {
+                grid-template-columns: 1fr !important;
+                gap: 12px !important;
+            }
+            
+            #how-coaching-works .coaching-card-item div {
+                overflow-wrap: anywhere;
+                word-break: break-word;
+                hyphens: auto;
+            }
+            
+            /* Блок "Отличие от других подходов" */
+            #differences .card > div > div,
+            .differences-grid {
+                grid-template-columns: 1fr !important;
+                gap: 20px !important;
+                max-width: 100% !important;
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+            }
+            
+            /* Адаптация для всех grid с большими gap */
+            [style*="gap: 350px"],
+            [style*="gap: 60px"],
+            [style*="gap: 80px"] {
+                gap: 20px !important;
+            }
+            
+            /* Блок "Ощутимые результаты" */
+            #results .card > div > div {
+                grid-template-columns: 1fr !important;
+                max-width: 100% !important;
+                gap: 20px;
+            }
+            
+            #results .card > div > p {
+                max-width: 100% !important;
+            }
+            
+            #results .card > div > p:last-child {
+                max-width: 100% !important;
+            }
+            
+            /* Блок "Наблюдаемый прогресс" */
+            #progress .card > div > div {
+                grid-template-columns: 1fr !important;
+                max-width: 100% !important;
+                gap: 20px;
+            }
+            
+            #progress .card > div > p {
+                max-width: 100% !important;
+            }
+            
+            /* Блок "Два формата" */
+            #formats .card > div > div {
+                grid-template-columns: 1fr !important;
+                max-width: 100% !important;
+                gap: 20px;
+            }
+            
+            /* Блок "5 ключевых направлений" */
+            #directions .card > div > div:first-of-type {
+                grid-template-columns: 1fr !important;
+                max-width: 100% !important;
+                gap: 12px;
+            }
+            
+            #directions .card > div > div:nth-of-type(2) {
+                grid-template-columns: 1fr !important;
+                max-width: 100% !important;
+                gap: 12px;
+            }
+            
+            /* FAQ */
+            #faq .accordion {
+                grid-template-columns: 1fr !important;
+                max-width: 100% !important;
+            }
+            
+            /* Кнопки */
+            .btn {
+                padding: 12px 24px;
+                font-size: 0.9rem;
+            }
+            
+            .btn-primary {
+                min-width: auto !important;
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+            
+            /* Статистика */
+            .stat-large {
+                font-size: 2.5rem;
+            }
+            
+            .stats-row {
+                gap: 24px;
+            }
+            
+            /* Цитаты */
+            .quote-box {
+                padding: 20px;
+                font-size: 1rem;
+            }
+            
+            /* Timeline */
+            .timeline-item {
+                padding-left: 60px;
+            }
+            
+            .timeline-item::before {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+            
+            /* Аккордеон */
+            .accordion-question {
+                padding: 16px 20px;
+                font-size: 0.95rem;
+            }
+            
+            .accordion-question span:first-child {
+                white-space: normal;
+            }
+            
+            .accordion-answer.active {
+                padding: 16px 20px;
+            }
+            
+            /* Бейджи */
+            .badge {
+                padding: 5px 12px;
+                font-size: 0.8rem;
+            }
+            
+            .values-badges {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .values-badges .badge {
+                width: 100%;
+                text-align: center;
+            }
+            
+            /* CTA секция */
+            #cta-section .card {
+                padding: 80px 20px 200px !important;
+            }
+            
+            #cta-section .card > div {
+                padding: 0 !important;
+            }
+            
+            #cta-section h2 {
+                font-size: clamp(1.75rem, 8vw, 2.5rem);
+            }
+            
+            #cta-section p {
+                font-size: clamp(1rem, 4vw, 1.3rem);
+            }
+            
+            #cta-section > div > div > a {
+                min-width: auto !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                padding: 16px 18px !important;
+                font-size: 1.2rem !important;
+            }
+            
+            #cta-section > div > div > div {
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+            
+            /* Убираем white-space: nowrap где это вызывает проблемы */
+            h2, h3, h4 {
+                white-space: normal !important;
+            }
+            
+            /* Адаптация для всех элементов с nowrap */
+            span[style*="white-space: nowrap"] {
+                white-space: normal !important;
+            }
+            
+            /* Адаптация gap для больших значений */
+            .differences-grid {
+                gap: 20px !important;
+            }
+            
+            /* Адаптация для всех элементов с фиксированными размерами */
+            .card > div > div[style*="max-width"] {
+                max-width: 100% !important;
+            }
+            
+            /* Убираем фиксированные min-width у кнопок и элементов */
+            [style*="min-width"] {
+                min-width: auto !important;
+            }
+            
+            /* Адаптация для flex контейнеров */
+            [style*="display: flex"] {
+                flex-wrap: wrap;
+            }
+            
+            /* Мета-информация */
+            .meta-row {
+                flex-direction: column;
+                gap: 16px;
+            }
+            
+            .meta-item {
+                min-width: auto;
+            }
+            
+            /* Слайдеры */
+            .slider-container {
+                margin: 40px 0 24px;
+                min-height: 250px;
+            }
+            
+            .slider-arrows {
+                padding: 0 10px;
+            }
+            
+            .slider-arrow {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+        }
+        
+        /* Очень маленькие экраны */
+        @media (max-width: 480px) {
+            .section {
+                padding: 0 12px;
+            }
+            
+            .card {
+                padding: 20px 16px 28px;
+            }
+            
+            .hero > div {
+                padding: 20px 12px 32px;
+            }
+            
+            h2 {
+                font-size: clamp(1.5rem, 7vw, 2rem);
+            }
+            
+            h3 {
+                font-size: 1.1rem;
+            }
+            
+            h4 {
+                font-size: 1rem;
+            }
+            
+            p, ul li {
+                font-size: 0.95rem;
+            }
+            
+            .main-navigation .nav-container a {
+                font-size: 0.65rem;
+                padding: 5px 8px;
+            }
+            
+            .btn {
+                padding: 10px 20px;
+                font-size: 0.85rem;
+            }
+            
+            .hero-cta-button {
+                font-size: 1.1rem !important;
+                padding: 14px 16px !important;
             }
         }
         
@@ -933,6 +1367,12 @@
             white-space: nowrap;
         }
         
+        @media (max-width: 768px) {
+            .values-badges .badge {
+                white-space: normal;
+            }
+        }
+        
         /* Кастомные буллеты */
         .custom-list {
             list-style: none;
@@ -944,6 +1384,12 @@
             padding-left: 40px;
             margin-bottom: 16px;
             white-space: nowrap;
+        }
+        
+        @media (max-width: 768px) {
+            .custom-list li {
+                white-space: normal;
+            }
         }
         
         .custom-list li::before {
@@ -1103,7 +1549,7 @@
                 </p>
                 
                 <!-- Три пункта в ОДИН РЯД -->
-                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: auto;">
+                <div class="how-coaching-grid" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: auto;">
                     <div class="coaching-card-item" style="background: rgba(255, 255, 255, 0.08); padding: 18px 20px; border-radius: 8px;">
                         <div style="color: white; font-size: 1.4rem; font-weight: 600; margin-bottom: 8px;">Фокус</div>
                         <div style="color: white; font-size: 0.875rem; line-height: 1.5;">не на проблемах,<br>а на решениях</div>
@@ -1141,7 +1587,7 @@
                 <h2>Отличие от других подходов</h2>
                 
                 <!-- Два столбца: Другие подходы | Коучинг -->
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 350px; margin-top: 32px; max-width: 77%; margin-left: auto; margin-right: auto;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 350px; margin-top: 32px; max-width: 77%; margin-left: auto; margin-right: auto;" class="differences-grid">
                     
                     <!-- Левый столбец: Другие подходы -->
                     <div style="display: flex; flex-direction: column; gap: 16px;">
@@ -1537,25 +1983,25 @@
                 <div class="timeline" style="margin-top: 40px;">
                     <div class="timeline-item" data-step="1">
                         <p class="timeline-period" style="color: #666;">Нулевой шаг</p>
-                        <h4 style="color: #000; white-space: nowrap;">Chemistry session (знакомство)</h4>
+                        <h4 style="color: #000;">Chemistry session (знакомство)</h4>
                         <p class="timeline-description" style="color: #333;">30-минутная встреча для проверки совместимости</p>
                     </div>
                     
                     <div class="timeline-item" data-step="2">
                         <p class="timeline-period" style="color: #666;">Недели 1-4</p>
-                        <h4 style="color: #000; white-space: nowrap;">Создание доверительных отношений</h4>
+                        <h4 style="color: #000;">Создание доверительных отношений</h4>
                         <p class="timeline-description" style="color: #333;">Диагностика, постановка целей на 3 месяца</p>
                     </div>
                     
                     <div class="timeline-item" data-step="3">
                         <p class="timeline-period" style="color: #666;">Недели 2-10</p>
-                        <h4 style="color: #000; white-space: nowrap;">Активная работа</h4>
+                        <h4 style="color: #000;">Активная работа</h4>
                         <p class="timeline-description" style="color: #333;">Еженедельные сессии, практики, промежуточный замер</p>
                     </div>
                     
                     <div class="timeline-item" data-step="4">
                         <p class="timeline-period" style="color: #666;">Недели 11-12</p>
-                        <h4 style="color: #000; white-space: nowrap;">Закрепление и завершение</h4>
+                        <h4 style="color: #000;">Закрепление и завершение</h4>
                         <p class="timeline-description" style="color: #333;">Фиксирование результатов, план развития</p>
                     </div>
                 </div>
@@ -1570,7 +2016,7 @@
                 <div>
                     <h2 style="color: white;">Конфиденциальность</h2>
                     
-                    <p style="font-size: 1.15rem; margin-bottom: 56px; color: rgba(255, 255, 255, 0.9); white-space: nowrap;">
+                    <p style="font-size: 1.15rem; margin-bottom: 56px; color: rgba(255, 255, 255, 0.9);">
                         Всё, что обсуждается в индивидуальном коучинге, остается между вами и коучем.
                     </p>
                     
@@ -1594,9 +2040,9 @@
     <div class="section" id="conditions">
         <div class="card gradient-light-with-image-13">
             <div style="grid-column: 1 / -1;">
-                <h2 style="color: white; white-space: nowrap;">Условия участия</h2>
+                    <h2 style="color: white;">Условия участия</h2>
                 
-                <h3 style="color: white; margin-top: 46px; margin-bottom: 14px; white-space: nowrap;">Требуется commitment на 3 месяца</h3>
+                    <h3 style="color: white; margin-top: 46px; margin-bottom: 14px;">Требуется commitment на 3 месяца</h3>
                 <ul class="custom-list" style="margin-bottom: 26px;">
                     <li style="color: rgba(255, 255, 255, 0.9);">12 еженедельных встреч (вторник или четверг)</li>
                     <li style="color: rgba(255, 255, 255, 0.9);">Выполнение практик между сессиями</li>
@@ -1604,7 +2050,7 @@
                     <li style="color: rgba(255, 255, 255, 0.9);">Открытость к обратной связи</li>
                 </ul>
                 
-                <h3 style="color: white; margin-top: 46px; margin-bottom: 14px; white-space: nowrap;">Измерение результатов</h3>
+                <h3 style="color: white; margin-top: 46px; margin-bottom: 14px;">Измерение результатов</h3>
                 <ul class="custom-list">
                     <li style="color: rgba(255, 255, 255, 0.9);">До, в середине и после программы</li>
                     <li style="color: rgba(255, 255, 255, 0.9);">Обратная связь для улучшения программы</li>
@@ -1618,7 +2064,7 @@
     <div class="section" id="faq">
         <div class="card gradient-light-with-image-14">
             <div style="grid-column: 1 / -1;">
-                <h2 style="color: #000; white-space: nowrap;">Часто задаваемые вопросы</h2>
+                <h2 style="color: #000;">Часто задаваемые вопросы</h2>
                 
                 <div class="accordion" style="margin-top: 64px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 66.66%;">
                     <div>
@@ -1706,9 +2152,9 @@
         <div class="card gradient-light-with-image-15" style="display: flex; flex-direction: column;">
             <div style="grid-column: 1 / -1; display: flex; flex-direction: column; height: 100%;">
                 <div>
-                    <h2 style="color: white; white-space: nowrap;">Почему стоит попробовать</h2>
+                    <h2 style="color: white;">Почему стоит попробовать</h2>
                     
-                    <h3 style="color: white; margin-top: 48px; margin-bottom: 14px; white-space: nowrap;">Это уникальная возможность:</h3>
+                    <h3 style="color: white; margin-top: 48px; margin-bottom: 14px;">Это уникальная возможность:</h3>
                     
                     <ul class="custom-list" style="margin-bottom: 32px;">
                         <li style="color: rgba(255, 255, 255, 0.9);">Получить профессиональную поддержку в развитии</li>
