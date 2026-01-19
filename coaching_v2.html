@@ -1,0 +1,1925 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Коучинг для руководителей</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Базовые стили */
+        body {
+            margin: 0;
+            padding: 0;
+            padding-bottom: 0;
+            background: #000;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+        
+        /* HERO - аналогично футеру */
+        .hero {
+            position: relative;
+            z-index: 100;
+            background: 
+                linear-gradient(to top,
+                    #000000 0%,
+                    rgba(0, 0, 0, 0.8) 30%,
+                    rgba(0, 0, 0, 0.4) 50%,
+                    rgba(0, 0, 0, 0.1) 70%,
+                    transparent 100%
+                ),
+                url('https://static.tildacdn.com/tild6333-3939-4638-a263-656134363131/__.jpg') center top / cover no-repeat;
+            width: 100%;
+            margin-top: 0;
+            padding: 0;
+            min-height: 77vh;
+            background-size: cover;
+            background-position: center top;
+        }
+        
+        .hero > div {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 40px 40px 60px;
+            max-width: 1756px;
+            margin: 0 auto;
+            min-height: 77vh;
+        }
+        
+        /* Секции для sticky блоков (как в исходной логике) */
+        .section {
+            position: relative;
+            padding: 0 40px;
+            min-height: calc(100vh + 650px); /* Высота экрана + высота карточки для полного перекрытия */
+            height: auto;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            margin-top: calc(-100vh + 50px); /* Следующий блок появляется когда предыдущий упёрся в меню */
+        }
+        
+        .hero + .main-navigation + .section {
+            margin-top: 0 !important; /* Первая секция начинается сразу после навигации */
+        }
+        
+        /* Карточки - sticky, одинаковая высота */
+        .card {
+            position: sticky;
+            top: 50px; /* Все карточки прилипают ниже навигации */
+            width: 100%;
+            max-width: 1756px;
+            min-height: 605px;
+            height: auto;
+            padding: 35px 60px 50px;
+            border-radius: 24px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: flex-start;
+            overflow: visible;
+        }
+        
+        /* Z-index для всех блоков - Hero с z-index: 100, карточки выше после прокрутки */
+        .hero + .main-navigation + .section .card { 
+            z-index: 1;
+        }
+        .section:nth-child(2) .card { z-index: 2; }
+        .section:nth-child(3) .card { z-index: 3; }
+        .section:nth-child(4) .card { z-index: 4; }
+        .section:nth-child(5) .card { z-index: 5; }
+        .section:nth-child(6) .card { z-index: 6; }
+        .section:nth-child(7) .card { z-index: 7; }
+        .section:nth-child(8) .card { z-index: 8; }
+        .section:nth-child(9) .card { z-index: 9; }
+        .section:nth-child(10) .card { z-index: 10; }
+        .section:nth-child(11) .card { z-index: 11; }
+        .section:nth-child(12) .card { z-index: 12; }
+        .section:nth-child(13) .card { z-index: 13; }
+        .section:nth-child(14) .card { z-index: 14; }
+        .section:nth-child(15) .card { z-index: 17; } /* Блок "Почему стоит попробовать" выше FAQ */
+        .section:nth-child(16) .card { z-index: 16; }
+        
+        /* Градиенты */
+        .gradient-light {
+            background: linear-gradient(135deg, #E9ECF0, #81848E);
+        }
+        
+        /* Первый блок С ИЗОБРАЖЕНИЕМ - ТЕМНЫЙ ГРАДИЕНТ */
+        .gradient-light-with-image {
+            background: 
+                linear-gradient(135deg,
+                    #15171A 0%,                   /* Темный в верхнем левом углу */
+                    #15171A 20%,
+                    rgba(21, 23, 26, 0.8) 40%,   /* Плавный переход */
+                    rgba(21, 23, 26, 0.4) 60%,
+                    rgba(21, 23, 26, 0.1) 75%,
+                    transparent 85%               /* Прозрачный справа/внизу = изображение видно */
+                ),
+                url('https://optim.tildacdn.com/tild6566-6463-4536-b231-626133383931/-/format/webp/___.jpg.webp') right center / cover no-repeat;
+        }
+        
+        /* Белый текст для этого блока */
+        .gradient-light-with-image h2,
+        .gradient-light-with-image h3,
+        .gradient-light-with-image h4,
+        .gradient-light-with-image p,
+        .gradient-light-with-image ul li {
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .gradient-light-with-image .quote-box {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: #F6664A;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .gradient-light-with-image .quote-author {
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        /* Второй блок С ИЗОБРАЖЕНИЕМ - СВЕТЛЫЙ ГРАДИЕНТ */
+        .gradient-light-with-image-2 {
+            background: 
+                linear-gradient(135deg,
+                    #E9ECF0 0%,                   /* Светлый в верхнем левом углу */
+                    #E9ECF0 15%,                  /* Сдвинул левее */
+                    rgba(233, 236, 240, 0.8) 30%, /* Сдвинул левее */
+                    rgba(233, 236, 240, 0.4) 45%, /* Сдвинул левее */
+                    rgba(233, 236, 240, 0.1) 60%, /* Сдвинул левее */
+                    transparent 70%               /* Прозрачность наступает раньше - VS четче */
+                ),
+                url('https://static.tildacdn.com/tild6436-3134-4462-b862-666262323639/VS___1.jpg') right center / cover no-repeat;
+        }
+        
+        /* Темный текст для светлого блока */
+        .gradient-light-with-image-2 h2 {
+            color: #000;
+        }
+        
+        /* Третий блок С ИЗОБРАЖЕНИЕМ - СЕРЫЙ ГРАДИЕНТ */
+        .gradient-light-with-image-3 {
+            background: 
+                linear-gradient(135deg,
+                    #81848E 0%,                   /* Серый в верхнем левом углу */
+                    #81848E 15%,
+                    rgba(129, 132, 142, 0.8) 30%,
+                    rgba(129, 132, 142, 0.4) 45%,
+                    rgba(129, 132, 142, 0.1) 60%,
+                    transparent 70%
+                ),
+                url('https://static.tildacdn.com/tild6339-3461-4862-a362-306665353532/100___.jpg') right center / cover no-repeat;
+            /* Высота остается 605px как у всех блоков */
+        }
+        
+        /* Белый текст для блока с серым градиентом */
+        .gradient-light-with-image-3 h2 {
+            color: white;
+        }
+        
+        .gradient-light-with-image-3 h3 {
+            color: white;
+        }
+        
+        .gradient-light-with-image-3 p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        /* Четвертый блок С ИЗОБРАЖЕНИЕМ - ТЕМНЫЙ ГРАДИЕНТ */
+        .gradient-light-with-image-4 {
+            background: 
+                linear-gradient(135deg,
+                    #15171A 0%,                   /* Темный в верхнем левом углу */
+                    #15171A 15%,
+                    rgba(21, 23, 26, 0.8) 30%,
+                    rgba(21, 23, 26, 0.4) 45%,
+                    rgba(21, 23, 26, 0.1) 60%,
+                    transparent 70%
+                ),
+                url('https://static.tildacdn.com/tild6432-3965-4665-b066-326231303739/__.jpg') right center / cover no-repeat;
+        }
+        
+        /* Белый текст для блока с темным градиентом */
+        .gradient-light-with-image-4 h2 {
+            color: white;
+        }
+        
+        .gradient-light-with-image-4 p {
+            color: rgba(255, 255, 255, 0.85);
+        }
+        
+        /* Пятый блок С ИЗОБРАЖЕНИЕМ - СВЕТЛЫЙ ГРАДИЕНТ */
+        .gradient-light-with-image-5 {
+            background: 
+                linear-gradient(135deg,
+                    #E9ECF0 0%,                   /* Светлый в верхнем левом углу */
+                    #E9ECF0 15%,
+                    rgba(233, 236, 240, 0.8) 30%,
+                    rgba(233, 236, 240, 0.4) 45%,
+                    rgba(233, 236, 240, 0.1) 60%,
+                    transparent 70%
+                ),
+                url('https://static.tildacdn.com/tild3235-3664-4563-b336-613632656264/__.jpg') right center / cover no-repeat;
+        }
+        
+        /* Темный текст для блока со светлым градиентом */
+        .gradient-light-with-image-5 h2 {
+            color: #000;
+        }
+        
+        .gradient-dark {
+            background: linear-gradient(135deg, #15171A, #F5F3F1);
+        }
+        
+        /* Белый текст на темном */
+        .gradient-dark h2,
+        .gradient-dark h3,
+        .gradient-dark h4,
+        .gradient-dark p,
+        .gradient-dark ul li,
+        .gradient-dark .stat-label {
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        /* UI */
+        .btn {
+            display: inline-block;
+            padding: 14px 32px;
+            font-size: 1rem;
+            font-weight: 500;
+            text-decoration: none;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background: #F6664A;
+            color: white;
+        }
+        
+        h2 {
+            font-size: clamp(3rem, 6vw, 4.2rem);
+            font-weight: 400;
+            margin: 0 0 20px 0; /* Убрал margin сверху */
+        }
+        
+        h3 {
+            font-size: 1.68rem; /* Увеличил в 1.2 раза */
+            font-weight: 500;
+            margin-bottom: 16px;
+        }
+        
+        h4 {
+            font-size: 1.38rem; /* Увеличил в 1.2 раза */
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        
+        p {
+            font-size: 1.26rem; /* Увеличил в 1.2 раза */
+            line-height: 1.7;
+            color: #666666;
+            margin-bottom: 16px;
+        }
+        
+        ul {
+            list-style: none;
+            margin: 20px 0;
+        }
+        
+        ul li {
+            padding-left: 24px;
+            position: relative;
+            margin-bottom: 12px;
+            color: #666666;
+            line-height: 1.6;
+            font-size: 1.26rem; /* Увеличил в 1.2 раза */
+        }
+        
+        ul li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: #F6664A;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+        
+        .meta-row {
+            display: flex;
+            gap: 40px;
+            margin: 28px 0;
+            flex-wrap: wrap;
+        }
+        
+        .meta-item {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .meta-label {
+            font-size: 0.85rem;
+            color: #666666;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .meta-value {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #000000;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 6px 14px;
+            background: rgba(246, 102, 74, 0.1);
+            color: #F6664A;
+            border-radius: 16px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        
+        .stat-large {
+            font-size: 4rem;
+            font-weight: 300;
+            color: #F6664A;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+        
+        .stat-label {
+            font-size: 0.95rem;
+            color: #666666;
+        }
+        
+        .stats-row {
+            display: flex;
+            gap: 40px;
+            margin: 32px 0;
+        }
+        
+        .stat-item {
+            flex: 1;
+        }
+        
+        .quote-box {
+            background: rgba(0, 0, 0, 0.03);
+            border-left: 4px solid #F6664A;
+            padding: 32px;
+            margin: 32px 0;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #666666;
+            font-style: italic;
+        }
+        
+        .quote-author {
+            margin-top: 16px;
+            font-style: normal;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #000000;
+        }
+        
+        .image-placeholder {
+            width: 100%;
+            height: 100%; /* Подстраивается под grid */
+            max-height: 500px; /* Ограничение высоты */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.02);
+            border-radius: 16px;
+            border: 2px dashed rgba(0, 0, 0, 0.1);
+            color: #666666;
+            font-size: 0.9rem;
+            text-align: center;
+            padding: 40px;
+        }
+        
+        .gradient-dark .image-placeholder {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        /* Слайдеры */
+        .slider-container {
+            position: relative;
+            overflow: hidden;
+            margin: 80px 0 32px 0; /* Увеличил верхний отступ - опускаем ниже */
+            display: flex;
+            align-items: center;
+            min-height: 350px; /* Увеличил высоту для лучшей центровки */
+        }
+        
+        .slider-track {
+            display: flex;
+            transition: transform 0.6s ease;
+            width: 100%;
+            align-items: center; /* Выравнивание по центру */
+        }
+        
+        .slider-slide {
+            min-width: 100%;
+            flex-shrink: 0;
+        }
+        
+        .slider-dots {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 32px;
+        }
+        
+        .slider-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+        }
+        
+        .slider-dot.active {
+            background: #F6664A;
+            width: 32px;
+            border-radius: 5px;
+        }
+        
+        .slider-arrows {
+            position: absolute;
+            top: 50%;
+            left: 0; /* Стрелки внутри контейнера */
+            right: 0;
+            transform: translateY(-50%);
+            display: flex;
+            justify-content: space-between;
+            pointer-events: none;
+            z-index: 10;
+            padding: 0 20px;
+        }
+        
+        .slider-arrow {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: white;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            pointer-events: all;
+            font-size: 1.5rem;
+            color: #000;
+        }
+        
+        .slider-arrow:hover {
+            background: #F6664A;
+            color: white;
+        }
+        
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1.32fr 1fr 1.32fr; /* Подложки еще шире на 10%: 1.2 * 1.1 = 1.32 */
+            gap: 80px;
+            margin: 32px 0;
+            align-items: center;
+            max-width: 1500px; /* Увеличил для более широких подложек */
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .card-small {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 20px 30px 20px 30px; /* Текст ближе к левому и верхнему краю */
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            min-height: 140px; /* Все подложки одинаковой высоты */
+            text-align: left; /* Текст по левому краю */
+        }
+        
+        .card-small h4 {
+            font-size: 1.8rem;
+            margin-top: 0; /* Убираем верхний отступ */
+            margin-bottom: 5px; /* Минимальное расстояние до текста */
+            color: #000;
+        }
+        
+        .card-small p {
+            font-size: 1.3rem;
+            color: #000;
+            margin-top: 0; /* Убираем верхний отступ */
+            margin-bottom: 0; /* Убираем нижний отступ */
+        }
+        
+        /* Выделение для карточки "Коучинг" */
+        .card-small.highlight {
+            border: 2px solid #F6664A; /* Коралловый из фирменной палитры */
+            box-shadow: 0 0 20px rgba(246, 102, 74, 0.5); /* Оранжевое свечение */
+        }
+        
+        .card-small.highlight h4 {
+            color: #000;
+            font-weight: 700;
+        }
+        
+        /* Старые стили для темного фона удалены, так как блок теперь светлый */
+        
+        @media (max-width: 968px) {
+            .section {
+                height: auto;
+                margin-top: 40px;
+            }
+            
+            .card {
+                position: relative;
+                grid-template-columns: 1fr;
+                min-height: auto;
+            }
+            
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-row {
+                flex-direction: column;
+            }
+        }
+        
+        /* Блок "Почему стоит попробовать" — уменьшаем высоту секции, чтобы футтер шёл сразу после */
+        #why-try {
+            height: auto !important; /* Высота по контенту, не 120vh */
+            min-height: auto !important; /* Убираем минимальную высоту */
+        }
+        
+        /* Фон между "Почему стоит попробовать" и футтером */
+        #cta-section {
+            background: #000 !important; /* Чёрный фон закрывает щель */
+        }
+        
+        /* Эффект перспективы для sticky-карточек */
+        .card {
+            transition: transform 0.1s ease-out;
+            transform-origin: center top;
+        }
+        
+        /* Секция CTA (футтер) — последняя секция, во всю ширину как hero, БЕЗ наезда */
+        #cta-section {
+            height: auto !important;
+            min-height: auto !important;
+            margin-top: 0 !important; /* Футтер идёт сразу после предыдущей секции, не наезжает */
+            padding: 0 !important;
+        }
+        
+        /* Карточка футтера — на всю ширину без скругления */
+        #cta-section .card {
+            z-index: 20 !important;
+            position: relative !important;
+            top: auto !important;
+            height: auto !important;
+            min-height: auto !important;
+            max-width: 100% !important;
+            width: 100% !important;
+            border-radius: 0 !important;
+            padding: 150px 40px 410px !important; /* Текст поднят выше */
+            display: flex !important;
+            justify-content: center !important;
+        }
+        
+        /* Контент футтера — такой же max-width как карточки */
+        #cta-section .card > div {
+            width: 100%;
+            max-width: 1756px;
+            padding: 0 40px 0 40px;
+            box-sizing: border-box;
+            margin: 0 auto;
+        }
+        
+        /* Убираем спец-исключения для последних секций — все блоки ведут себя одинаково */
+        
+        /* Hover эффект для кнопки Hero */
+        .hero-cta-button:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Hover эффект для плашек в блоке "Как работает коучинг" */
+        .coaching-card-item {
+            transition: all 0.3s ease;
+        }
+        
+        .coaching-card-item:hover {
+            background: rgba(255, 255, 255, 0.18) !important;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Hover эффект для подложек в блоке "Ощутимые результаты" */
+        .results-card-item {
+            transition: all 0.3s ease;
+        }
+        
+        .results-card-item:hover {
+            background: rgba(0, 0, 0, 0.7) !important;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* Hover эффект для плашек в блоке "5 ключевых направлений" */
+        .direction-card-item {
+            transition: all 0.3s ease;
+            min-height: 95px; /* Одинаковая высота для всех плашек */
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; /* Заголовки по верхнему краю */
+        }
+        
+        .direction-card-item:hover {
+            background: rgba(0, 0, 0, 0.7) !important;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* Навигация — точно такая же структура как .section */
+        .main-navigation {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            width: 100%;
+            padding: 0 40px; /* Точно как у .section */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+        }
+        
+        /* Внутренний контейнер меню — точно как .card */
+        .main-navigation .nav-container {
+            max-width: 1756px; /* Точно как у .card */
+            width: 100%;
+            padding: 12px 0; /* Только вертикальный padding */
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            justify-content: flex-end;
+            overflow-x: auto;
+            white-space: nowrap;
+            box-sizing: border-box;
+        }
+        
+        .main-navigation .nav-container a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+        
+        .main-navigation .nav-container a:hover {
+            color: #F6664A;
+            background: rgba(246, 102, 74, 0.1);
+        }
+        
+        /* Адаптивность меню для маленьких экранов */
+        @media (max-width: 1400px) {
+            .main-navigation .nav-container {
+                padding: 12px 40px;
+                gap: 16px;
+            }
+            .main-navigation .nav-container a {
+                font-size: 0.8rem;
+                padding: 6px 10px;
+            }
+        }
+        
+        @media (max-width: 1200px) {
+            .main-navigation .nav-container {
+                padding: 12px 20px;
+                gap: 12px;
+            }
+            .main-navigation .nav-container a {
+                font-size: 0.75rem;
+                padding: 6px 8px;
+            }
+        }
+        
+        @media (max-width: 1000px) {
+            .main-navigation .nav-container {
+                justify-content: flex-start;
+                gap: 8px;
+            }
+            .main-navigation .nav-container a {
+                font-size: 0.7rem;
+                padding: 5px 6px;
+            }
+        }
+        
+        /* Таймлайн для программы */
+        .timeline {
+            position: relative;
+            padding-left: 0;
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-left: 90px;
+            margin-bottom: 21px;
+            transition: all 0.3s ease;
+        }
+        
+        .timeline-item::before {
+            content: attr(data-step);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #000;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+        
+        .timeline-item .timeline-period {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .timeline-item h4 {
+            margin-bottom: 5px;
+            margin-top: 0;
+        }
+        
+        .timeline-item .timeline-description {
+            font-size: 0.95rem;
+            color: #333;
+            margin-top: 0;
+        }
+        
+        .timeline-item:hover::before {
+            background: #F6664A;
+            color: white;
+            transform: scale(1.1);
+        }
+        
+        .timeline-item:hover {
+            transform: translateX(12px);
+        }
+        
+        .timeline-item:hover h4 {
+            color: #F6664A;
+        }
+        
+        /* Аккордеон для FAQ */
+        .accordion-item {
+            margin-bottom: 16px;
+        }
+        
+        .accordion-question {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 20px 24px;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .accordion-question span:first-child {
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .accordion-question:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .accordion-question.active {
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+        
+        .accordion-answer {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 0;
+            border-radius: 12px;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-top: none;
+            overflow: hidden;
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.5s cubic-bezier(0.4, 0, 0.2, 1), padding 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .accordion-answer.active {
+            padding: 20px 24px;
+            grid-template-rows: 1fr;
+        }
+        
+        .accordion-answer.active > div {
+            padding: 20px 0;
+        }
+        
+        .accordion-answer > div {
+            overflow: hidden;
+            min-height: 0;
+            padding: 0;
+            transition: padding 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .accordion-icon {
+            font-size: 1.8rem;
+            font-weight: 300;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            color: #F6664A;
+            line-height: 1;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .accordion-icon::before {
+            content: '+';
+        }
+        
+        .accordion-question.active .accordion-icon {
+            transform: rotate(45deg);
+        }
+        
+        /* Блок О коуче - цитата */
+        .quote-box {
+            position: absolute;
+            top: 60px;
+            right: 60px;
+            max-width: 35%;
+            padding: 32px;
+            background: rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 12px 12px 12px 12px;
+            font-style: italic;
+            font-size: 1.1rem;
+        }
+        
+        /* Цитата в блоке "О коуче" - выравнивание по левому краю */
+        #about-coach .quote-box {
+            position: relative !important;
+            left: auto !important;
+            top: auto !important;
+            right: auto !important;
+            max-width: 100% !important;
+            margin: 0 0 24px 0 !important;
+            padding: 24px 32px !important;
+            border-left: none !important;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 4px 20px rgba(246, 102, 74, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        
+        .quote-box:hover {
+            box-shadow: 0 8px 30px rgba(246, 102, 74, 0.4);
+            transform: translateY(-2px);
+        }
+        
+        /* Бейджи для ценностей */
+        .values-badges {
+            display: flex;
+            flex-direction: row;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 12px;
+        }
+        
+        .values-badges .badge {
+            white-space: nowrap;
+        }
+        
+        /* Кастомные буллеты */
+        .custom-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .custom-list li {
+            position: relative;
+            padding-left: 40px;
+            margin-bottom: 16px;
+            white-space: nowrap;
+        }
+        
+        .custom-list li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: #F6664A;
+            font-size: 1.5rem;
+        }
+        
+        
+        /* Блоки с фонами */
+        .gradient-light-with-image-10 {
+            background: 
+                linear-gradient(135deg,
+                    #15171A 0%,
+                    #15171A 15%,
+                    rgba(21, 23, 26, 0.8) 30%,
+                    rgba(21, 23, 26, 0.4) 45%,
+                    rgba(21, 23, 26, 0.1) 60%,
+                    transparent 70%
+                ),
+                url('https://static.tildacdn.com/tild3962-3639-4530-b163-373261643833/__.jpg') right center / cover no-repeat;
+        }
+        
+        .gradient-light-with-image-11 {
+            background: 
+                linear-gradient(135deg,
+                    #E9ECF0 0%,
+                    #E9ECF0 15%,
+                    rgba(233, 236, 240, 0.8) 30%,
+                    rgba(233, 236, 240, 0.4) 45%,
+                    rgba(233, 236, 240, 0.1) 60%,
+                    transparent 70%
+                ),
+                url('https://static.tildacdn.com/tild6139-3538-4466-b936-376462623566/12__.jpg') right center / cover no-repeat;
+        }
+        
+        .gradient-light-with-image-12 {
+            background: 
+                linear-gradient(135deg,
+                    #81848E 0%,
+                    #81848E 15%,
+                    rgba(129, 132, 142, 0.8) 30%,
+                    rgba(129, 132, 142, 0.4) 45%,
+                    rgba(129, 132, 142, 0.1) 60%,
+                    transparent 70%
+                ),
+                url('https://static.tildacdn.com/tild6139-3934-4231-a563-366232313864/__.jpg') right center / cover no-repeat;
+        }
+        
+        .gradient-light-with-image-13 {
+            background: 
+                linear-gradient(135deg,
+                    #15171A 0%,
+                    #15171A 15%,
+                    rgba(21, 23, 26, 0.8) 30%,
+                    rgba(21, 23, 26, 0.4) 45%,
+                    rgba(21, 23, 26, 0.1) 60%,
+                    transparent 70%
+                ),
+                url('https://static.tildacdn.com/tild3234-6239-4335-a163-323534373132/___.jpg') right center / cover no-repeat;
+        }
+        
+        .gradient-light-with-image-14 {
+            background: 
+                linear-gradient(135deg,
+                    #E9ECF0 0%,
+                    #E9ECF0 15%,
+                    rgba(233, 236, 240, 0.8) 30%,
+                    rgba(233, 236, 240, 0.4) 45%,
+                    rgba(233, 236, 240, 0.1) 60%,
+                    transparent 70%
+                ),
+                url('https://static.tildacdn.com/tild3035-6632-4733-b439-393362316234/QA__.jpg') right center / cover no-repeat;
+        }
+        
+        .gradient-light-with-image-15 {
+            background: 
+                linear-gradient(135deg,
+                    #81848E 0%,
+                    #81848E 15%,
+                    rgba(129, 132, 142, 0.8) 30%,
+                    rgba(129, 132, 142, 0.4) 45%,
+                    rgba(129, 132, 142, 0.1) 60%,
+                    transparent 70%
+                ),
+                url('https://optim.tildacdn.com/tild3031-3633-4931-b763-316237656564/-/format/webp/_.jpg.webp') right center / cover no-repeat;
+        }
+        
+        .badge-green {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4CAF50;
+        }
+        
+        .badge.badge-investment:hover {
+            box-shadow: 0 0 20px rgba(246, 102, 74, 0.6), 0 0 40px rgba(246, 102, 74, 0.4) !important;
+            border-color: rgba(246, 102, 74, 0.5) !important;
+        }
+        
+        /* Перекрытие теперь в px — универсально для всех экранов */
+        
+        /* Убираем задвоенные буллеты в блоках "Наблюдаемый прогресс" и "Два формата на выбор" */
+        #progress .results-card-item ul li::before,
+        #formats ul li::before {
+            content: none !important;
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- HERO -->
+    <div class="hero">
+        <div>
+            <h2 style="color: white; margin-bottom: 24px; text-align: left;">Коучинг для руководителей</h2>
+            <p style="font-size: 1.725rem; color: rgba(255, 255, 255, 0.9); margin-bottom: 48px; font-weight: 300; text-align: left; max-width: 1000px; line-height: 1.4;">
+                Воспользуйтесь возможностью получить индивидуальную поддержку в&nbsp;развитии или присоединиться к&nbsp;групповому коучингу с&nbsp;коллегами
+            </p>
+            
+            <div style="display: flex; align-items: center; gap: 24px; margin-bottom: 32px; flex-wrap: wrap;">
+                <a href="#formats" class="hero-cta-button" style="text-decoration: none; display: inline-flex; align-items: center; justify-content: space-between; background: white; color: #000; padding: 18px 20px 18px 20px; border-radius: 8px; font-weight: 600; font-size: 1.5rem; min-width: 320px; width: auto !important; max-width: fit-content !important; flex-shrink: 0; transition: transform 0.3s ease;">
+                    <span style="white-space: nowrap;">Подать заявку</span>
+                    <span style="font-size: 1.8rem; flex-shrink: 0;">›</span>
+                </a>
+                
+                <div style="display: inline-flex; align-items: center; padding: 18px 20px 18px 20px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.5); background: transparent; min-width: 320px; width: auto !important; max-width: fit-content !important; flex-shrink: 0; box-sizing: border-box;">
+                    <div style="display: flex; flex-direction: column; gap: 0; line-height: 1.2;">
+                        <span style="color: rgba(255, 255, 255, 0.9); font-size: 0.9rem; white-space: nowrap;">Длительность</span>
+                        <span style="color: white; font-size: 1.1rem; font-weight: 600; white-space: nowrap;">3 месяца</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- НАВИГАЦИЯ -->
+    <nav class="main-navigation">
+        <div class="nav-container">
+            <a href="#formats" class="nav-link">Два формата на выбор</a>
+            <a href="#directions" class="nav-link">5 ключевых направлений</a>
+            <a href="#about-coach" class="nav-link">О коуче</a>
+            <a href="#individual-program" class="nav-link">Программа индивидуального коучинга</a>
+            <a href="#conditions" class="nav-link">Условия участия</a>
+            <a href="#faq" class="nav-link">Часто задаваемые вопросы</a>
+        </div>
+    </nav>
+    
+    <!-- БЛОК 1: КАК РАБОТАЕТ КОУЧИНГ -->
+    <div class="section" id="how-coaching-works">
+        <div class="card gradient-light-with-image">
+            <div style="display: flex; flex-direction: column; height: 100%;">
+                <h2>Как работает коучинг</h2>
+                
+                <p style="margin-bottom: 28px;">
+                    Коуч не дает советов и не решает за вас. Коуч помогает вам найти ответы внутри себя 
+                    через мощные вопросы, которые раскрывают ваш собственный потенциал.
+                </p>
+                
+                <!-- Три пункта в ОДИН РЯД -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: auto;">
+                    <div class="coaching-card-item" style="background: rgba(255, 255, 255, 0.08); padding: 18px 20px; border-radius: 8px;">
+                        <div style="color: white; font-size: 1.4rem; font-weight: 600; margin-bottom: 8px;">Фокус</div>
+                        <div style="color: white; font-size: 0.875rem; line-height: 1.5;">не на проблемах,<br>а на решениях</div>
+                    </div>
+                    <div class="coaching-card-item" style="background: rgba(255, 255, 255, 0.08); padding: 18px 20px; border-radius: 8px;">
+                        <div style="color: white; font-size: 1.4rem; font-weight: 600; margin-bottom: 8px;">Направление</div>
+                        <div style="color: white; font-size: 0.875rem; line-height: 1.5;">всегда в будущее, к целям</div>
+                    </div>
+                    <div class="coaching-card-item" style="background: rgba(255, 255, 255, 0.08); padding: 18px 20px; border-radius: 8px;">
+                        <div style="color: white; font-size: 1.4rem; font-weight: 600; margin-bottom: 8px;">Результат</div>
+                        <div style="color: white; font-size: 0.875rem; line-height: 1.5;">устойчивые изменения, которые вы создаете сами</div>
+                    </div>
+                </div>
+                
+                <!-- Цитата ICF внизу блока -->
+                <div style="margin-top: auto; background: rgba(0, 0, 0, 0.15); padding: 24px; border-radius: 8px; font-style: italic; color: rgba(255, 255, 255, 0.8); line-height: 1.7; font-size: 1.05rem;">
+                    Коучинг — это партнерство с клиентом, которое стимулирует мыслительные и творческие процессы, 
+                    вдохновляя на максимальное раскрытие личного и профессионального потенциала.
+                    <div style="margin-top: 14px; font-style: normal; font-weight: 600; font-size: 0.9rem; color: rgba(255, 255, 255, 0.9); text-align: right;">
+                        — Международная Федерация Коучинга (ICF)
+                    </div>
+                </div>
+            </div>
+            
+            <div style="width: 100%; height: 100%;">
+                <!-- Изображение в фоне блока -->
+            </div>
+        </div>
+    </div>
+
+    <!-- БЛОК 2: ОТЛИЧИЯ -->
+    <div class="section" id="differences">
+        <div class="card gradient-light-with-image-2">
+            <div style="grid-column: 1 / -1;">
+                <h2>Отличие от других подходов</h2>
+                
+                <!-- Два столбца: Другие подходы | Коучинг -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 350px; margin-top: 32px; max-width: 77%; margin-left: auto; margin-right: auto;">
+                    
+                    <!-- Левый столбец: Другие подходы -->
+                    <div style="display: flex; flex-direction: column; gap: 16px;">
+                        
+                        <!-- Психотерапия -->
+                        <div style="background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); padding: 20px 24px; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.2); transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 24px rgba(0,0,0,0.3)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+                            <h4 style="color: #000; font-weight: 600; font-size: 1.1rem; margin: 0 0 8px 0;">Психотерапия</h4>
+                            <p style="color: rgba(0,0,0,0.7); font-size: 0.95rem; margin: 0; line-height: 1.4;">Работает с прошлым, лечит травмы</p>
+                        </div>
+                        
+                        <!-- Консалтинг -->
+                        <div style="background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); padding: 20px 24px; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.2); transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 24px rgba(0,0,0,0.3)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+                            <h4 style="color: #000; font-weight: 600; font-size: 1.1rem; margin: 0 0 8px 0;">Консалтинг</h4>
+                            <p style="color: rgba(0,0,0,0.7); font-size: 0.95rem; margin: 0; line-height: 1.4;">Предлагает готовые решения</p>
+                        </div>
+                        
+                        <!-- Тренинг -->
+                        <div style="background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); padding: 20px 24px; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.2); transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 24px rgba(0,0,0,0.3)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+                            <h4 style="color: #000; font-weight: 600; font-size: 1.1rem; margin: 0 0 8px 0;">Тренинг</h4>
+                            <p style="color: rgba(0,0,0,0.7); font-size: 0.95rem; margin: 0; line-height: 1.4;">Передает знания в группе</p>
+                        </div>
+                        
+                        <!-- Менторство -->
+                        <div style="background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); padding: 20px 24px; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.2); transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 24px rgba(0,0,0,0.3)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+                            <h4 style="color: #000; font-weight: 600; font-size: 1.1rem; margin: 0 0 8px 0;">Менторство</h4>
+                            <p style="color: rgba(0,0,0,0.7); font-size: 0.95rem; margin: 0; line-height: 1.4;">Показывает путь</p>
+                        </div>
+                        
+                    </div>
+                    
+                    <!-- Правый столбец: Коучинг -->
+                    <div style="display: flex; flex-direction: column; gap: 16px;">
+                        
+                        <!-- Коучинг 1 -->
+                        <div style="background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); padding: 20px 24px; border-radius: 16px; border: 1px solid rgba(246, 102, 74, 0.3); box-shadow: 0 2px 12px rgba(246,102,74,0.15); transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 24px rgba(246,102,74,0.5)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 12px rgba(246,102,74,0.15)';">
+                            <h4 style="color: #000; font-weight: 600; font-size: 1.1rem; margin: 0 0 8px 0;">Коучинг</h4>
+                            <p style="color: #000; font-size: 0.95rem; margin: 0; line-height: 1.4; font-weight: 500;">Работает с будущим, развивает потенциал</p>
+                        </div>
+                        
+                        <!-- Коучинг 2 -->
+                        <div style="background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); padding: 20px 24px; border-radius: 16px; border: 1px solid rgba(246, 102, 74, 0.3); box-shadow: 0 2px 12px rgba(246,102,74,0.15); transition: all 0.3s ease; cursor: pointer;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 24px rgba(246,102,74,0.5)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 12px rgba(246,102,74,0.15)';">
+                            <h4 style="color: #000; font-weight: 600; font-size: 1.1rem; margin: 0 0 8px 0;">Коучинг</h4>
+                            <p style="color: #000; font-size: 0.95rem; margin: 0; line-height: 1.4; font-weight: 500;">Помогает найти свои решения</p>
+                        </div>
+                        
+                        <!-- Коучинг 3 -->
+                        <div style="background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); padding: 20px 24px; border-radius: 16px; border: 1px solid rgba(246, 102, 74, 0.3); box-shadow: 0 2px 12px rgba(246,102,74,0.15); transition: all 0.3s ease; cursor: pointer;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 24px rgba(246,102,74,0.5)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 12px rgba(246,102,74,0.15)';">
+                            <h4 style="color: #000; font-weight: 600; font-size: 1.1rem; margin: 0 0 8px 0;">Коучинг</h4>
+                            <p style="color: #000; font-size: 0.95rem; margin: 0; line-height: 1.4; font-weight: 500;">Раскрывает внутренние ресурсы</p>
+                        </div>
+                        
+                        <!-- Коучинг 4 -->
+                        <div style="background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); padding: 20px 24px; border-radius: 16px; border: 1px solid rgba(246, 102, 74, 0.3); box-shadow: 0 2px 12px rgba(246,102,74,0.15); transition: all 0.3s ease; cursor: pointer;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 24px rgba(246,102,74,0.5)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 12px rgba(246,102,74,0.15)';">
+                            <h4 style="color: #000; font-weight: 600; font-size: 1.1rem; margin: 0 0 8px 0;">Коучинг</h4>
+                            <p style="color: #000; font-size: 0.95rem; margin: 0; line-height: 1.4; font-weight: 500;">Помогает найти свой путь</p>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                    
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- БЛОК 3: ОЩУТИМЫЕ РЕЗУЛЬТАТЫ -->
+    <div class="section" id="results">
+        <div class="card gradient-light-with-image-3">
+            <div style="grid-column: 1 / -1; padding-bottom: 0; margin-bottom: 0; overflow: hidden;">
+                <h2 style="margin-bottom: 0; line-height: 1.2;">Ощутимые результаты</h2>
+                
+                <p style="font-size: 1.3rem; color: rgba(255, 255, 255, 0.85); margin-top: 20px; margin-bottom: 0; max-width: 70%; line-height: 1.4;">
+                    Коучинг прокачивает не только руководителей, но и повышает результаты всей компании
+                </p>
+                
+                <!-- Две подложки: Руководители | Компания (слева) -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 18px; max-width: 50%;">
+                    
+                    <!-- Подложка "Руководители" -->
+                    <div class="results-card-item" style="background: rgba(0, 0, 0, 0.5); padding: 20px 20px 50px; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                        <div style="display: flex; justify-content: flex-end; margin-bottom: 0;">
+                            <span class="badge" style="margin-bottom: 0;">Руководители</span>
+                        </div>
+                        
+                        <!-- Цифры вертикально -->
+                        <div style="display: flex; flex-direction: column; gap: 11px; margin-top: 6px;">
+                            <div class="stat-item" style="margin-bottom: 0;">
+                                <div style="font-size: 2.2rem; font-weight: 700; color: white; margin-bottom: 3px; line-height: 1.2;">70%</div>
+                                <div style="font-size: 0.95rem; color: rgba(255, 255, 255, 0.85); line-height: 1.3;">Улучшили карьеру и отношения</div>
+                            </div>
+                            <div class="stat-item" style="margin-bottom: 0;">
+                                <div style="font-size: 2.2rem; font-weight: 700; color: white; margin-bottom: 3px; line-height: 1.2;">80%</div>
+                                <div style="font-size: 0.95rem; color: rgba(255, 255, 255, 0.85); line-height: 1.3;">Повысили уверенность в себе</div>
+                            </div>
+                            <div class="stat-item" style="margin-bottom: 0;">
+                                <div style="font-size: 2.2rem; font-weight: 700; color: white; margin-bottom: 3px; line-height: 1.2;">51%</div>
+                                <div style="font-size: 0.95rem; color: rgba(255, 255, 255, 0.85); line-height: 1.3;">Снизили тревожность и стресс</div>
+                            </div>
+                            <div class="stat-item" style="margin-bottom: 0;">
+                                <div style="font-size: 2.2rem; font-weight: 700; color: white; margin-bottom: 0; line-height: 1.2;">47%</div>
+                                <div style="font-size: 0.95rem; color: rgba(255, 255, 255, 0.85); line-height: 1.3;">Снизили эмоциональное выгорание</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Подложка "Компания" -->
+                    <div class="results-card-item" style="background: rgba(0, 0, 0, 0.5); padding: 20px 20px 50px; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                        <div style="display: flex; justify-content: flex-end; margin-bottom: 0;">
+                            <span class="badge" style="margin-bottom: 0;">Компания</span>
+                        </div>
+                        
+                        <!-- Цифры вертикально -->
+                        <div style="display: flex; flex-direction: column; gap: 11px; margin-top: 6px;">
+                            <div class="stat-item" style="margin-bottom: 0;">
+                                <div style="font-size: 2.2rem; font-weight: 700; color: white; margin-bottom: 3px; line-height: 1.2;">529%</div>
+                                <div style="font-size: 0.95rem; color: rgba(255, 255, 255, 0.85); line-height: 1.3;">ROI — возврат инвестиций</div>
+                            </div>
+                            <div class="stat-item" style="margin-bottom: 0;">
+                                <div style="font-size: 2.2rem; font-weight: 700; color: white; margin-bottom: 3px; line-height: 1.2;">+88%</div>
+                                <div style="font-size: 0.95rem; color: rgba(255, 255, 255, 0.85); line-height: 1.3;">Рост производительности</div>
+                            </div>
+                            <div class="stat-item" style="margin-bottom: 0;">
+                                <div style="font-size: 2.2rem; font-weight: 700; color: white; margin-bottom: 3px; line-height: 1.2;">+48%</div>
+                                <div style="font-size: 0.95rem; color: rgba(255, 255, 255, 0.85); line-height: 1.3;">Повышение качества работы</div>
+                            </div>
+                            <div class="stat-item" style="margin-bottom: 0;">
+                                <div style="font-size: 2.2rem; font-weight: 700; color: white; margin-bottom: 0; line-height: 1.2;">+61%</div>
+                                <div style="font-size: 0.95rem; color: rgba(255, 255, 255, 0.85); line-height: 1.3;">Удовлетворенность работой</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                <!-- Источники внизу -->
+                <p style="margin-top: 10px; margin-bottom: 0; padding-bottom: 0; font-size: 0.85rem; color: white; text-align: left; max-width: 50%; line-height: 1.2;">
+                    Источники: ICF Global Coaching Study, Newsom M. (2021), Informed Leadership (2021)
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- БЛОК 4: НАБЛЮДАЕМЫЙ ПРОГРЕСС -->
+    <div class="section" id="progress">
+        <div class="card gradient-light-with-image-4">
+            <div style="grid-column: 1 / -1;">
+                <h2>Наблюдаемый прогресс</h2>
+                
+                <p style="font-size: 1.3rem; color: rgba(255, 255, 255, 0.85); margin-top: 16px; margin-bottom: 0; max-width: 70%;">
+                    Так трансформируются запросы после коучинга
+                </p>
+                
+                <!-- Две подложки: До | После -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 30px; max-width: 60%;">
+                    
+                    <!-- Подложка "До" -->
+                    <div class="results-card-item" style="background: rgba(0, 0, 0, 0.4); padding: 20px 20px 50px; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                        <div style="margin-bottom: 0;">
+                            <span class="badge" style="margin-bottom: 0;">До</span>
+                        </div>
+                        
+                        <!-- Список запросов -->
+                        <ul style="margin-top: 12px; padding-left: 0 !important; list-style-type: none !important; margin-left: 0 !important;">
+                            <li style="margin-bottom: 14px; color: rgba(255, 255, 255, 0.85); font-size: 1rem !important; line-height: 1.6; padding-left: 0 !important; list-style: none !important;">
+                                <span style="color: #F6664A; margin-right: 10px;">•</span>Всё на мне, работаю 24/7, команда ждет указаний
+                            </li>
+                            <li style="margin-bottom: 14px; color: rgba(255, 255, 255, 0.85); font-size: 1rem !important; line-height: 1.6; padding-left: 0 !important; list-style: none !important;">
+                                <span style="color: #F6664A; margin-right: 10px;">•</span>Люди выгорают, не знаю как поддержать
+                            </li>
+                            <li style="margin-bottom: 14px; color: rgba(255, 255, 255, 0.85); font-size: 1rem !important; line-height: 1.6; padding-left: 0 !important; list-style: none !important;">
+                                <span style="color: #F6664A; margin-right: 10px;">•</span>Делегирую, но приходится контролировать каждый шаг
+                            </li>
+                            <li style="margin-bottom: 14px; color: rgba(255, 255, 255, 0.85); font-size: 1rem !important; line-height: 1.6; padding-left: 0 !important; list-style: none !important;">
+                                <span style="color: #F6664A; margin-right: 10px;">•</span>Хочу развиваться, но стою на месте
+                            </li>
+                            <li style="color: rgba(255, 255, 255, 0.85); font-size: 1rem !important; line-height: 1.6; padding-left: 0 !important; list-style: none !important;">
+                                <span style="color: #F6664A; margin-right: 10px;">•</span>Боюсь принять важное решение
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Подложка "После" -->
+                    <div class="results-card-item" style="background: rgba(0, 0, 0, 0.4); padding: 20px 20px 50px; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                        <div style="margin-bottom: 0;">
+                            <span class="badge" style="margin-bottom: 0;">После</span>
+                        </div>
+                        
+                        <!-- Список результатов -->
+                        <ul style="margin-top: 12px; padding-left: 0 !important; list-style-type: none !important; margin-left: 0 !important;">
+                            <li style="margin-bottom: 14px; color: rgba(255, 255, 255, 0.85); font-size: 1rem !important; line-height: 1.6; padding-left: 0 !important; list-style: none !important;">
+                                <span style="color: #F6664A; margin-right: 10px;">•</span>Команда стала самостоятельнее, результат вырос
+                            </li>
+                            <li style="margin-bottom: 14px; color: rgba(255, 255, 255, 0.85); font-size: 1rem !important; line-height: 1.6; padding-left: 0 !important; list-style: none !important;">
+                                <span style="color: #F6664A; margin-right: 10px;">•</span>Научился слышать людей — они находят решения
+                            </li>
+                            <li style="margin-bottom: 14px; color: rgba(255, 255, 255, 0.85); font-size: 1rem !important; line-height: 1.6; padding-left: 0 !important; list-style: none !important;">
+                                <span style="color: #F6664A; margin-right: 10px;">•</span>Понял свои сильные стороны
+                            </li>
+                            <li style="margin-bottom: 14px; color: rgba(255, 255, 255, 0.85); font-size: 1rem !important; line-height: 1.6; padding-left: 0 !important; list-style: none !important;">
+                                <span style="color: #F6664A; margin-right: 10px;">•</span>Нашел баланс между работой и жизнью
+                            </li>
+                            <li style="color: rgba(255, 255, 255, 0.85); font-size: 1rem !important; line-height: 1.6; padding-left: 0 !important; list-style: none !important;">
+                                <span style="color: #F6664A; margin-right: 10px;">•</span>Освободил время для стратегии
+                            </li>
+                        </ul>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- БЛОК 5: ДВА ФОРМАТА - ТАРИФЫ -->
+    <div class="section" id="formats">
+        <div class="card gradient-light-with-image-5">
+            <div style="grid-column: 1 / -1;">
+                <h2 style="color: #000;">Два формата на выбор</h2>
+                
+                <!-- Две тарифные плашки - 2/3 ширины блока -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 32px; max-width: 66.66%;">
+                    
+                    <!-- Тариф "Индивидуальный" -->
+                    <div style="background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); padding: 24px 22px; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.2); display: flex; flex-direction: column; transition: all 0.3s ease;" onmouseover="this.style.transform='scale(1.02)'; this.style.boxShadow='0 8px 16px rgba(0,0,0,0.2)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                            <h3 style="margin-top: 0; margin-bottom: 0; font-size: 1.5rem; color: #000; line-height: 1.3;">Индивидуальный коучинг</h3>
+                            <span class="badge" style="margin-bottom: 0;">3 месяца</span>
+                        </div>
+                        <p style="color: #000; margin-bottom: 24px; margin-top: 0; font-size: 0.9rem; line-height: 1.4;">
+                            Для руководителей с глубокими запросами на трансформацию
+                        </p>
+                        
+                        <ul style="margin-bottom: 48px; margin-top: 24px; padding-left: 0 !important; padding-top: 0 !important; list-style: none !important; color: #000; font-size: 0.9rem; line-height: 1.4;">
+                            <li style="margin-bottom: 6px; margin-top: 0; padding-left: 0 !important; list-style: none !important; color: #000;">
+                                <span style="color: #F6664A; margin-right: 8px;">•</span><span style="color: #000;">12 индивидуальных сессий<br><span style="display: inline-block; padding-left: 20px;">(1 раз в неделю, 60 минут)</span></span>
+                            </li>
+                            <li style="margin-bottom: 6px; padding-left: 0 !important; list-style: none !important; color: #000;">
+                                <span style="color: #F6664A; margin-right: 8px;">•</span><span style="color: #000;">Глубокая работа с вашими целями</span>
+                            </li>
+                            <li style="margin-bottom: 6px; padding-left: 0 !important; list-style: none !important; color: #000;">
+                                <span style="color: #F6664A; margin-right: 8px;">•</span><span style="color: #000;">Конфиденциальная среда</span>
+                            </li>
+                            <li style="margin-bottom: 6px; padding-left: 0 !important; list-style: none !important; color: #000;">
+                                <span style="color: #F6664A; margin-right: 8px;">•</span><span style="color: #000;">Персональные практики</span>
+                            </li>
+                            <li style="margin-bottom: 0; padding-left: 0 !important; list-style: none !important; color: #000;">
+                                <span style="color: #F6664A; margin-right: 8px;">•</span><span style="color: #000;">Измерение прогресса</span>
+                            </li>
+                        </ul>
+                        
+                        <div style="display: flex; gap: 12px; margin-top: auto; align-items: center;">
+                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeID7JEdcVEamR6NNbFSViJpt4oUHVs0YuwOoCEdTKm_oDoRg/viewform" target="_blank" class="btn btn-primary" style="text-decoration: none; display: inline-flex; align-items: center; justify-content: space-between; background: white; color: #000; padding: 12px 30px; border-radius: 8px; font-weight: 600; font-size: 0.95rem; min-width: 180px; width: auto !important; max-width: fit-content !important; flex-shrink: 0; transition: all 0.3s ease;" onmouseover="this.style.transform='scale(1.05)';" onmouseout="this.style.transform='scale(1)';">
+                                <span>Записаться</span>
+                                <span style="font-size: 1.2rem; flex-shrink: 0; margin-left: 12px;">›</span>
+                            </a>
+                            <div style="display: inline-flex; align-items: center; padding: 12px 20px; border-radius: 8px; border: 1px solid rgba(0, 0, 0, 0.3); background: transparent; width: auto !important; max-width: fit-content !important; flex-shrink: 0; box-sizing: border-box; height: fit-content;">
+                                <span style="color: #000; font-size: 0.9rem; white-space: nowrap;">Участников до 3</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Тариф "Групповой" -->
+                    <div style="background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); padding: 24px 22px; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.2); display: flex; flex-direction: column; transition: all 0.3s ease;" onmouseover="this.style.transform='scale(1.02)'; this.style.boxShadow='0 8px 16px rgba(0,0,0,0.2)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                            <h3 style="margin-top: 0; margin-bottom: 0; font-size: 1.5rem; color: #000; line-height: 1.3;">Групповой коучинг</h3>
+                            <span class="badge" style="margin-bottom: 0;">3 месяца</span>
+                        </div>
+                        <p style="color: #000; margin-bottom: 24px; margin-top: 0; font-size: 0.9rem; line-height: 1.4;">
+                            Для руководителей, которые хотят проработать вызовы в среде коллег
+                        </p>
+                        
+                        <ul style="margin-bottom: 48px; margin-top: 24px; padding-left: 0 !important; padding-top: 0 !important; list-style: none !important; color: #000; font-size: 0.9rem; line-height: 1.4;">
+                            <li style="margin-bottom: 6px; margin-top: 0; padding-left: 0 !important; list-style: none !important; color: #000;">
+                                <span style="color: #F6664A; margin-right: 8px;">•</span><span style="color: #000;">12 групповых встреч (1,5 часа)</span>
+                            </li>
+                            <li style="margin-bottom: 6px; padding-left: 0 !important; list-style: none !important; color: #000;">
+                                <span style="color: #F6664A; margin-right: 8px;">•</span><span style="color: #000;">1-2 участника работают с запросами,<br><span style="display: inline-block; padding-left: 20px;">а остальные берут инсайты</span></span>
+                            </li>
+                            <li style="margin-bottom: 0; padding-left: 0 !important; list-style: none !important; color: #000;">
+                                <span style="color: #F6664A; margin-right: 8px;">•</span><span style="color: #000;">Конфиденциальная среда</span>
+                            </li>
+                        </ul>
+                        
+                        <div style="display: flex; gap: 12px; margin-top: auto; align-items: center;">
+                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeID7JEdcVEamR6NNbFSViJpt4oUHVs0YuwOoCEdTKm_oDoRg/viewform" target="_blank" class="btn btn-primary" style="text-decoration: none; display: inline-flex; align-items: center; justify-content: space-between; background: white; color: #000; padding: 12px 30px; border-radius: 8px; font-weight: 600; font-size: 0.95rem; min-width: 180px; width: auto !important; max-width: fit-content !important; flex-shrink: 0; transition: all 0.3s ease;" onmouseover="this.style.transform='scale(1.05)';" onmouseout="this.style.transform='scale(1)';">
+                                <span>Записаться</span>
+                                <span style="font-size: 1.2rem; flex-shrink: 0; margin-left: 12px;">›</span>
+                            </a>
+                            <div style="display: inline-flex; align-items: center; padding: 12px 20px; border-radius: 8px; border: 1px solid rgba(0, 0, 0, 0.3); background: transparent; width: auto !important; max-width: fit-content !important; flex-shrink: 0; box-sizing: border-box; height: fit-content;">
+                                <span style="color: #000; font-size: 0.9rem; white-space: nowrap;">Участников до 12</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- БЛОК 7: 5 КЛЮЧЕВЫХ НАПРАВЛЕНИЙ -->
+    <div class="section" id="directions">
+        <div class="card gradient-dark" style="background-image: url('https://optim.tildacdn.com/tild3261-3536-4336-b761-383631623739/-/format/webp/_.jpg.webp'); background-size: cover; background-position: center;">
+            <div style="grid-column: 1 / -1;">
+                <h2 style="color: white;">5 ключевых направлений</h2>
+                <p style="color: rgba(255, 255, 255, 0.9); margin-bottom: 32px;">В&nbsp;сфере iGaming вызовы уникальны: высокий темп изменений, выгорание команд, сложность делегирования в&nbsp;турбулентности.<br>Программа строится вокруг 5&nbsp;критичных вызовов лидерства в&nbsp;iGaming.</p>
+                
+                <!-- Первый ряд: 3 плашки (занимают 60% ширины) -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 20px; max-width: 60%;">
+                    <!-- Плашка 1 -->
+                    <div class="direction-card-item" style="background: rgba(0, 0, 0, 0.5); padding: 22px 20px 14px; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                        <div style="color: white; font-size: 1.2rem; font-weight: 600; margin-bottom: 6px;">Управление энергией и&nbsp;работа с&nbsp;выгоранием</div>
+                        <div style="color: rgba(255, 255, 255, 0.8); font-size: 0.85rem; line-height: 1.4;">От перегруза к&nbsp;продуктивному рабочему ритму</div>
+                    </div>
+                    
+                    <!-- Плашка 2 -->
+                    <div class="direction-card-item" style="background: rgba(0, 0, 0, 0.5); padding: 22px 20px 14px; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                        <div style="color: white; font-size: 1.2rem; font-weight: 600; margin-bottom: 6px;">Делегирование и контроль</div>
+                        <div style="color: rgba(255, 255, 255, 0.8); font-size: 0.85rem; line-height: 1.4;">От микроменеджмента к&nbsp;доверию</div>
+                    </div>
+                    
+                    <!-- Плашка 3 -->
+                    <div class="direction-card-item" style="background: rgba(0, 0, 0, 0.5); padding: 22px 20px 14px; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                        <div style="color: white; font-size: 1.2rem; font-weight: 600; margin-bottom: 6px;">Принятие решений в&nbsp;неопределенности</div>
+                        <div style="color: rgba(255, 255, 255, 0.8); font-size: 0.85rem; line-height: 1.4;">От парализующих сомнений к&nbsp;уверенным действиям</div>
+                    </div>
+                </div>
+                
+                <!-- Второй ряд: 2 плашки (такой же ширины, как в первом ряду) -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; max-width: 60%; margin-bottom: 24px;">
+                    <!-- Плашка 4 -->
+                    <div class="direction-card-item" style="background: rgba(0, 0, 0, 0.5); padding: 22px 20px 14px; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                        <div style="color: white; font-size: 1.2rem; font-weight: 600; margin-bottom: 6px;">Влияние и коммуникация</div>
+                        <div style="color: rgba(255, 255, 255, 0.8); font-size: 0.85rem; line-height: 1.4;">От директивного управления к&nbsp;вдохновляющему лидерству</div>
+                    </div>
+                    
+                    <!-- Плашка 5 -->
+                    <div class="direction-card-item" style="background: rgba(0, 0, 0, 0.5); padding: 22px 20px 14px; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                        <div style="color: white; font-size: 1.2rem; font-weight: 600; margin-bottom: 6px;">Стратегическое мышление и&nbsp;фокус</div>
+                        <div style="color: rgba(255, 255, 255, 0.8); font-size: 0.85rem; line-height: 1.4;">От тушения пожаров к&nbsp;созданию будущего</div>
+                    </div>
+                    <!-- Пустая колонка для выравнивания -->
+                    <div></div>
+                </div>
+                
+                <!-- Текст внизу блока как бейдж -->
+                <div style="margin-top: 32px; display: inline-flex;">
+                    <span class="badge badge-investment" style="background: rgba(0, 0, 0, 0.3); color: #F6664A; border: 1px solid transparent; padding: 12px 20px; font-size: 1.1rem; transition: all 0.3s ease; display: inline-block; white-space: normal; line-height: 1.4;">Темы — это ориентиры, мы будем работать с вашими конкретными запросами здесь и сейчас</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- БЛОК 8: О КОУЧЕ -->
+    <div class="section" id="about-coach">
+        <div class="card gradient-light-with-image-10" style="display: flex; flex-direction: column;">
+            <div style="grid-column: 1 / -1; position: relative; display: flex; flex-direction: column; height: 100%;">
+                <div>
+                    <h2 style="color: white; margin-bottom: 48px;">О коуче</h2>
+                    
+                    <h3 style="color: #F6664A; margin-bottom: 5px;">Инна Забора</h3>
+                    <p style="color: rgba(255, 255, 255, 0.7); font-size: 1rem; margin-top: 0; margin-bottom: 16px;">Внутренний коуч компании</p>
+                    
+                    <ul class="custom-list" style="margin-bottom: 0;">
+                        <li style="color: rgba(255, 255, 255, 0.9);">Сертифицированный коуч ICF и ICU с 2016 года</li>
+                        <li style="color: rgba(255, 255, 255, 0.9);">Международный Эриксоновский университет коучинга</li>
+                    </ul>
+                </div>
+                
+                <div style="margin-top: auto; padding-top: 16px;">
+                    <div class="quote-box" style="position: relative !important; left: auto !important; top: auto !important; width: auto !important; max-width: 100% !important; margin: 0 0 24px 0 !important; border-left: none !important; padding: 24px 32px !important;">
+                        Работаю по международным стандартам ICF с использованием научно обоснованных методов.<br>Специализируюсь на работе с руководителями в быстрорастущих компаниях, где высокий темп<br>и неопределенность требуют гибкости и устойчивости.
+                    </div>
+                    
+                    <h4 style="color: rgba(255, 255, 255, 0.9); margin-bottom: 24px;">Ценности:</h4>
+                    <div class="values-badges">
+                        <span class="badge" style="background: rgba(246, 102, 74, 0.2); color: #F6664A; border: 1px solid rgba(246, 102, 74, 0.3);">Конфиденциальность</span>
+                        <span class="badge" style="background: rgba(246, 102, 74, 0.2); color: #F6664A; border: 1px solid rgba(246, 102, 74, 0.3);">Безоценочность</span>
+                        <span class="badge" style="background: rgba(246, 102, 74, 0.2); color: #F6664A; border: 1px solid rgba(246, 102, 74, 0.3);">Фокус на результат</span>
+                        <span class="badge" style="background: rgba(246, 102, 74, 0.2); color: #F6664A; border: 1px solid rgba(246, 102, 74, 0.3);">Вера в потенциал</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- БЛОК 11: ПРОГРАММА ИНДИВИДУАЛЬНОГО КОУЧИНГА -->
+    <div class="section" id="individual-program">
+        <div class="card gradient-light-with-image-11">
+            <div style="grid-column: 1 / -1;">
+                <h2 style="color: #000;">Программа индивидуального коучинга</h2>
+                
+                <div class="timeline" style="margin-top: 40px;">
+                    <div class="timeline-item" data-step="1">
+                        <p class="timeline-period" style="color: #666;">Нулевой шаг</p>
+                        <h4 style="color: #000; white-space: nowrap;">Chemistry session (знакомство)</h4>
+                        <p class="timeline-description" style="color: #333;">30-минутная встреча для проверки совместимости</p>
+                    </div>
+                    
+                    <div class="timeline-item" data-step="2">
+                        <p class="timeline-period" style="color: #666;">Недели 1-4</p>
+                        <h4 style="color: #000; white-space: nowrap;">Создание доверительных отношений</h4>
+                        <p class="timeline-description" style="color: #333;">Диагностика, постановка целей на 3 месяца</p>
+                    </div>
+                    
+                    <div class="timeline-item" data-step="3">
+                        <p class="timeline-period" style="color: #666;">Недели 2-10</p>
+                        <h4 style="color: #000; white-space: nowrap;">Активная работа</h4>
+                        <p class="timeline-description" style="color: #333;">Еженедельные сессии, практики, промежуточный замер</p>
+                    </div>
+                    
+                    <div class="timeline-item" data-step="4">
+                        <p class="timeline-period" style="color: #666;">Недели 11-12</p>
+                        <h4 style="color: #000; white-space: nowrap;">Закрепление и завершение</h4>
+                        <p class="timeline-description" style="color: #333;">Фиксирование результатов, план развития</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- БЛОК 12: КОНФИДЕНЦИАЛЬНОСТЬ -->
+    <div class="section" id="confidentiality">
+        <div class="card gradient-light-with-image-12">
+            <div style="grid-column: 1 / -1; display: flex; flex-direction: column; height: 100%;">
+                <div>
+                    <h2 style="color: white;">Конфиденциальность</h2>
+                    
+                    <p style="font-size: 1.15rem; margin-bottom: 56px; color: rgba(255, 255, 255, 0.9); white-space: nowrap;">
+                        Всё, что обсуждается в индивидуальном коучинге, остается между вами и коучем.
+                    </p>
+                    
+                    <h3 style="color: white; margin-bottom: 16px;">Что гарантируется:</h3>
+                    <ul class="custom-list" style="margin-bottom: 0;">
+                        <li style="color: rgba(255, 255, 255, 0.9);">Никакая информация не передается руководству без вашего согласия</li>
+                        <li style="color: rgba(255, 255, 255, 0.9);">Все темы обсуждаются в безопасной среде</li>
+                    </ul>
+                </div>
+                
+                <div style="margin-top: auto; padding-top: 32px;">
+                    <span class="badge badge-investment" style="background: rgba(0, 0, 0, 0.3); color: #F6664A; border: 1px solid transparent; padding: 12px 20px; font-size: 1.1rem; transition: all 0.3s ease; display: inline-block;">
+                        Коучинговое соглашение закрепляет правила конфиденциальности
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- БЛОК 13: УСЛОВИЯ УЧАСТИЯ -->
+    <div class="section" id="conditions">
+        <div class="card gradient-light-with-image-13">
+            <div style="grid-column: 1 / -1;">
+                <h2 style="color: white; white-space: nowrap;">Условия участия</h2>
+                
+                <h3 style="color: white; margin-top: 46px; margin-bottom: 14px; white-space: nowrap;">Требуется commitment на 3 месяца</h3>
+                <ul class="custom-list" style="margin-bottom: 26px;">
+                    <li style="color: rgba(255, 255, 255, 0.9);">12 еженедельных встреч (вторник или четверг)</li>
+                    <li style="color: rgba(255, 255, 255, 0.9);">Выполнение практик между сессиями</li>
+                    <li style="color: rgba(255, 255, 255, 0.9);">Готовность к изменениям и экспериментам</li>
+                    <li style="color: rgba(255, 255, 255, 0.9);">Открытость к обратной связи</li>
+                </ul>
+                
+                <h3 style="color: white; margin-top: 46px; margin-bottom: 14px; white-space: nowrap;">Измерение результатов</h3>
+                <ul class="custom-list">
+                    <li style="color: rgba(255, 255, 255, 0.9);">До, в середине и после программы</li>
+                    <li style="color: rgba(255, 255, 255, 0.9);">Обратная связь для улучшения программы</li>
+                    <li style="color: rgba(255, 255, 255, 0.9);">Возможность поделиться опытом (анонимно)</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- БЛОК 14: FAQ -->
+    <div class="section" id="faq">
+        <div class="card gradient-light-with-image-14">
+            <div style="grid-column: 1 / -1;">
+                <h2 style="color: #000; white-space: nowrap;">Часто задаваемые вопросы</h2>
+                
+                <div class="accordion" style="margin-top: 64px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 66.66%;">
+                    <div>
+                        <div class="accordion-item">
+                            <div class="accordion-question" onclick="toggleAccordion(this)">
+                                <span style="color: #000; white-space: nowrap;">Почему только 3 места для индивидуального коучинга?</span>
+                                <span class="accordion-icon"></span>
+                            </div>
+                            <div class="accordion-answer">
+                                <div style="color: #000; padding: 0;">
+                                    <p style="font-size: 0.95rem; margin: 0;">Качественный коучинг требует времени и полного внимания к запросу каждого участника, поэтому для максимальной эффективности количество мест ограничено до 3. Чтобы охватить больше желающих, мы также запускаем групповой формат коучинга.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item">
+                            <div class="accordion-question" onclick="toggleAccordion(this)">
+                                <span style="color: #000; white-space: nowrap;">Как будет происходить отбор?</span>
+                                <span class="accordion-icon"></span>
+                            </div>
+                            <div class="accordion-answer">
+                                <div style="color: #000; padding: 0;">
+                                    <p style="font-size: 0.95rem; margin: 0;">Для индивидуального коучинга — через chemistry sessions. Для группового коучинга — на основе заявок (при превышении лимита приоритет отдается срочности запроса).</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item">
+                            <div class="accordion-question" onclick="toggleAccordion(this)">
+                                <span style="color: #000; white-space: nowrap;">Будет ли продолжение после 3 месяцев?</span>
+                                <span class="accordion-icon"></span>
+                            </div>
+                            <div class="accordion-answer">
+                                <div style="color: #000; padding: 0;">
+                                    <p style="font-size: 0.95rem; margin: 0;">Это зависит от результатов. Возможно продление для текущих участников и запуск новых потоков.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="accordion-item">
+                            <div class="accordion-question" onclick="toggleAccordion(this)">
+                                <span style="color: #000; white-space: nowrap;">Что если я не попаду в индивидуальный коучинг?</span>
+                                <span class="accordion-icon"></span>
+                            </div>
+                            <div class="accordion-answer">
+                                <div style="color: #000; padding: 0;">
+                                    <p style="font-size: 0.95rem; margin: 0;">Вы можете присоединиться к групповому коучингу. Это отличная возможность проработать свои запросы в поддерживающей среде коллег.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item">
+                            <div class="accordion-question" onclick="toggleAccordion(this)">
+                                <span style="color: #000; white-space: nowrap;">У меня мало времени. Смогу ли я участвовать?</span>
+                                <span class="accordion-icon"></span>
+                            </div>
+                            <div class="accordion-answer">
+                                <div style="color: #000; padding: 0;">
+                                    <p style="font-size: 0.95rem; margin: 0;">Программа требует 60-90 минут в неделю + время на практики. Если вы не готовы выделить это время на протяжении 3 месяцев, лучше отложить участие.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item">
+                            <div class="accordion-question" onclick="toggleAccordion(this)">
+                                <span style="color: #000; white-space: nowrap;">Что если у меня не получится посещать каждую неделю?</span>
+                                <span class="accordion-icon"></span>
+                            </div>
+                            <div class="accordion-answer">
+                                <div style="color: #000; padding: 0;">
+                                    <p style="font-size: 0.95rem; margin: 0;">Регулярность критична для результата. Пропуск более 2 сессий делает участие неэффективным. Выбирайте время, когда точно сможете участвовать.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- БЛОК 15: ПОЧЕМУ СТОИТ ПОПРОБОВАТЬ -->
+    <div class="section section-why" id="why-try">
+        <div class="card gradient-light-with-image-15" style="display: flex; flex-direction: column;">
+            <div style="grid-column: 1 / -1; display: flex; flex-direction: column; height: 100%;">
+                <div>
+                    <h2 style="color: white; white-space: nowrap;">Почему стоит попробовать</h2>
+                    
+                    <h3 style="color: white; margin-top: 48px; margin-bottom: 14px; white-space: nowrap;">Это уникальная возможность:</h3>
+                    
+                    <ul class="custom-list" style="margin-bottom: 32px;">
+                        <li style="color: rgba(255, 255, 255, 0.9);">Получить профессиональную поддержку в развитии</li>
+                        <li style="color: rgba(255, 255, 255, 0.9);">Освоить подход, который работает в Fortune 500</li>
+                        <li style="color: rgba(255, 255, 255, 0.9);">Быть первыми, кто формирует коучинговую культуру в компании</li>
+                        <li style="color: rgba(255, 255, 255, 0.9);">Получить измеримые результаты за 3 месяца</li>
+                    </ul>
+                </div>
+                
+                <div style="margin-top: auto; padding-top: 32px;">
+                    <span class="badge badge-investment" style="background: rgba(0, 0, 0, 0.3); color: #F6664A; border: 1px solid transparent; padding: 12px 20px; font-size: 1.1rem; transition: all 0.3s ease; display: inline-block;">
+                        Коучинг — это инвестиция в ваше развитие и результаты команды
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- БЛОК 16: CTA - ФУТТЕР (как обычная sticky-секция) -->
+    <div class="section" id="cta-section">
+        <div class="card" style="background: linear-gradient(to bottom, #000000 0%, #000000 5%, rgba(0, 0, 0, 0.9) 15%, rgba(0, 0, 0, 0.7) 30%, rgba(0, 0, 0, 0.4) 50%, rgba(0, 0, 0, 0.1) 70%, transparent 85%), url('https://static.tildacdn.com/tild3434-6566-4130-a438-613637636537/_2_1.jpg') center top / cover no-repeat; display: flex; flex-direction: column; justify-content: center;">
+            <div style="grid-column: 1 / -1;" id="cta">
+                <h2 style="color: white; margin-bottom: 24px; text-align: left;">Готовы начать?</h2>
+                
+                <p style="font-size: 1.725rem; color: rgba(255, 255, 255, 0.9); margin-bottom: 48px; font-weight: 300; text-align: left;">
+                    Заполните заявку и станьте частью первой коучинговой программы для руководителей
+                </p>
+                
+                <div style="display: flex; align-items: center; gap: 24px; flex-wrap: wrap;">
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSeID7JEdcVEamR6NNbFSViJpt4oUHVs0YuwOoCEdTKm_oDoRg/viewform" target="_blank" style="text-decoration: none; display: inline-flex; align-items: center; justify-content: space-between; background: white; color: #000; padding: 18px 20px 18px 20px; border-radius: 8px; font-weight: 600; font-size: 1.5rem; min-width: 320px; width: auto !important; max-width: fit-content !important; flex-shrink: 0;">
+                        <span style="white-space: nowrap;">Подать заявку</span>
+                        <span style="font-size: 1.8rem; flex-shrink: 0;">›</span>
+                    </a>
+                    
+                    <div style="display: inline-flex; align-items: center; padding: 18px 20px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.5); background: transparent;">
+                        <div style="display: flex; flex-direction: column; gap: 0; line-height: 1.2;">
+                            <span style="color: rgba(255, 255, 255, 0.9); font-size: 0.9rem; white-space: nowrap;">Сроки подачи заявок</span>
+                            <span style="color: white; font-size: 1.1rem; font-weight: 600; white-space: nowrap;">до 23.01</span>
+                        </div>
+                    </div>
+                    
+                    <div style="display: inline-flex; align-items: center; padding: 18px 20px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.5); background: transparent;">
+                        <div style="display: flex; flex-direction: column; gap: 0; line-height: 1.2;">
+                            <span style="color: rgba(255, 255, 255, 0.9); font-size: 0.9rem; white-space: nowrap;">Старт программы</span>
+                            <span style="color: white; font-size: 1.1rem; font-weight: 600; white-space: nowrap;">03.02</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const sliders = {
+            'comparisonSlider': { current: 0, total: 4 },
+            'requestsSlider': { current: 0, total: 2 },
+            'formatsSlider': { current: 0, total: 2 }
+        };
+        
+        window.moveSlide = function(id, dir) {
+            sliders[id].current += dir;
+            if (sliders[id].current < 0) sliders[id].current = sliders[id].total - 1;
+            if (sliders[id].current >= sliders[id].total) sliders[id].current = 0;
+            
+            const track = document.querySelector(`#${id} .slider-track`);
+            if (track) track.style.transform = `translateX(-${sliders[id].current * 100}%)`;
+            
+            updateDots(id);
+        };
+        
+        function updateDots(id) {
+            const dots = document.querySelectorAll(`#${id.replace('Slider', 'Dots')} .slider-dot`);
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === sliders[id].current);
+            });
+        }
+        
+        function initSlider(id) {
+            const container = document.getElementById(id.replace('Slider', 'Dots'));
+            if (!container) return;
+            
+            container.innerHTML = '';
+            for (let i = 0; i < sliders[id].total; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'slider-dot' + (i === 0 ? ' active' : '');
+                dot.onclick = () => {
+                    sliders[id].current = i;
+                    const track = document.querySelector(`#${id} .slider-track`);
+                    if (track) track.style.transform = `translateX(-${i * 100}%)`;
+                    updateDots(id);
+                };
+                container.appendChild(dot);
+            }
+        }
+        
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+        
+        function init() {
+            initSlider('comparisonSlider');
+            initSlider('requestsSlider');
+            initSlider('formatsSlider');
+        }
+        
+        function toggleAccordion(element) {
+            const answer = element.nextElementSibling;
+            const isActive = answer.classList.contains('active');
+            
+            // Закрываем все аккордеоны
+            document.querySelectorAll('.accordion-answer').forEach(item => {
+                item.classList.remove('active');
+            });
+            document.querySelectorAll('.accordion-question').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Открываем текущий, если он был закрыт
+            if (!isActive) {
+                answer.classList.add('active');
+                element.classList.add('active');
+            }
+        }
+        
+        // Плавный скролл для навигации
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                
+                if (targetElement) {
+                    // Вычисляем позицию с учетом высоты навигации (50px)
+                    const navHeight = 50;
+                    const targetPosition = targetElement.offsetTop - navHeight;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Плавный скролл для кнопки "Подать заявку" в Hero
+        document.querySelectorAll('.hero-cta-button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const formatsSection = document.getElementById('formats');
+                
+                if (formatsSection) {
+                    formatsSection.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Эффект перспективы для sticky-карточек (оптимизировано)
+        let ticking = false;
+        const cards = document.querySelectorAll('.section .card');
+        const navHeight = 50;
+        
+        // Добавляем GPU-ускорение для карточек
+        cards.forEach(card => {
+            card.style.willChange = 'transform, opacity';
+            card.style.transform = 'translateZ(0)'; // Принудительный GPU слой
+        });
+        
+        function updatePerspective() {
+            cards.forEach((card, index) => {
+                // Если карточка прилипла и есть следующая карточка
+                if (index < cards.length - 1) {
+                    const nextCard = cards[index + 1];
+                    const nextTop = nextCard.getBoundingClientRect().top;
+                    
+                    // Когда следующая карточка начинает наезжать
+                    const overlapStart = window.innerHeight * 0.7;
+                    const overlapEnd = navHeight + 100;
+                    
+                    if (nextTop < overlapStart && nextTop > overlapEnd) {
+                        const progress = 1 - (nextTop - overlapEnd) / (overlapStart - overlapEnd);
+                        const scale = 1 - (progress * 0.05);
+                        card.style.transform = `scale3d(${scale}, ${scale}, 1)`;
+                        card.style.opacity = '1';
+                    } else if (nextTop <= overlapEnd) {
+                        card.style.transform = 'scale3d(0.95, 0.95, 1)';
+                        const hideProgress = Math.max(0, 1 - (nextTop - navHeight) / 100);
+                        card.style.opacity = Math.max(0, 1 - hideProgress).toString();
+                    } else {
+                        card.style.transform = 'scale3d(1, 1, 1)';
+                        card.style.opacity = '1';
+                    }
+                }
+            });
+            ticking = false;
+        }
+        
+        function onScroll() {
+            if (!ticking) {
+                requestAnimationFrame(updatePerspective);
+                ticking = true;
+            }
+        }
+        
+        window.addEventListener('scroll', onScroll, { passive: true });
+        updatePerspective();
+    </script>
+</body>
+</html>
+
